@@ -2,6 +2,7 @@ import streamlit as st
 from router import router
 from faq import ingest_faq_data,faq_chain
 from pathlib import Path
+from sql import sql_chain
 
 
 faqs_path = Path(__file__).parent / "resources/faq_data.csv"
@@ -11,8 +12,10 @@ def ask(query):
     route = router(query).name
     if route == 'faq':
         return faq_chain(query)
+    elif route == 'sql':
+        return sql_chain(query)
     else:
-        return f"Router {route} not implemented yet"
+        return f"Route {route} not implemented yet"
 
 st.title("E commerce chatbot")
 
