@@ -1,3 +1,4 @@
+from networkx import has_path
 import pandas as pd
 from pathlib import Path
 import chromadb
@@ -59,7 +60,7 @@ def faq_chain(query):
     answer = generate_answer(query, context)
     return answer 
 
-def generate_answer(query, context ):
+def generate_answer(query, context):
     prompt = f''' Given the following context and question, generate answer based on this context only.
     If the answer is not found in the context, kindly state "I don't know". Don't try to make up an answer.
 
@@ -70,20 +71,22 @@ def generate_answer(query, context ):
     '''
 
     chat_completion = groq_client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": prompt,
-        }
-    ],
-    model=os.environ['GROQ_MODEL'],
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        model=os.environ['GROQ_MODEL'],
     )
 
-    print(chat_completion.choices[0].message.content)
+    response = chat_completion.choices[0].message.content
+    print(response)   
+    return response   
     
 
 if __name__ == '__main__':
-    ingest_faq_data(faqs_path)
+    ingest_faq_data(has_path)
     # query = "What's your policy on defective products?"
     query = "Do you take Cash as a payment option?"
     # result = get_relevant_qa(query)
