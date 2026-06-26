@@ -17,7 +17,12 @@ def ask(query):
     else:
         return f"Route {route} not implemented yet"
 
-st.title("E commerce chatbot")
+# st.title("E commerce chatbot")
+col1, col2 = st.columns([1, 5])
+with col1:
+    st.image("img.png", width=80)
+with col2:
+    st.title("E Commerce Chatbot")
 
 query = st.chat_input("Write your query")
 
